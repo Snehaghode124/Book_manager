@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book List</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa; /* Light grey background */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        h1 {
+            color: #343a40; /* Dark grey heading */
+            margin-bottom: 20px;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+        .add-book {
+            display: inline-block;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background-color: #007bff; /* Primary blue */
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .add-book:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+        .book-list {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+        }
+        .book-list li {
+            background-color: #cce8f2; /* White background */
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .book-list li div {
+            display: flex;
+            align-items: center;
+        }
+        .book-list li a {
+            margin-right: 15px;
+            color: #007bff; /* Primary blue */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .book-list li a:hover {
+            color: #0056b3; /* Darker blue on hover */
+        }
+        .book-list li a.delete {
+            color: #dc3545; /* Delete action in red */
+        }
+        .book-list li a.delete:hover {
+            color: #c82333; /* Darker red on hover */
+        }
+        /* Alternating row colors */
+        .book-list li:nth-child(even) {
+            background-color: #91cbe5; /* Light grey */
+        }
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .book-list li {
+                flex-direction: column;
+                text-align: center;
+            }
+            .book-list li div {
+                margin-bottom: 10px;
+            }
+            .book-list li a {
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Books</h1>
+        <a href="{% url 'book_new' %}" class="add-book">Add New Book</a>
+        <ul class="book-list">
+            {% for book in books %}
+                <li>
+                    <div>
+                        <a href="{% url 'book_detail' pk=book.pk %}">{{ book.title }}</a>
+                    </div>
+                    <div>
+                        <a href="{% url 'book_edit' pk=book.pk %}">Edit</a>
+                        <a href="{% url 'book_delete' pk=book.pk %}" class="delete">Delete</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
